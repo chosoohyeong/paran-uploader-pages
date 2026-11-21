@@ -30,18 +30,21 @@ th{color:var(--fg);font-weight:700}
 <p class="date">최종 수정 2026년 11월 21일</p>
 
 <h2>1. 요청하는 구글 권한</h2>
-<p>이 앱은 아래 세 가지 권한만 요청합니다. 그 밖의 권한은 요청하지 않습니다.</p>
+<p>이 앱은 기본으로 아래 세 가지 권한을 요청합니다. 수익 보고서를 보려는 채널에 한해, 채널 주인이 따로 승인하면 네 번째 권한(읽기 전용)을 추가로 받습니다. 그 밖의 권한은 요청하지 않습니다.</p>
 <table>
 <tr><th>범위</th><th>쓰는 이유</th></tr>
 <tr><td><code>.../auth/youtube.upload</code></td><td>승인받은 채널에 영상을 올리기 위해</td></tr>
 <tr><td><code>.../auth/youtube.readonly</code></td><td>어느 채널에 올리는지 확인하고, 올린 영상의 조회수·좋아요·댓글 수를 읽기 위해</td></tr>
-<tr><td><code>.../auth/youtube</code></td><td>비공개로 올린 영상을 유튜브 심사 뒤 공개로 바꾸기 위해</td></tr>
+<tr><td><code>.../auth/youtube</code></td><td>비공개로 올린 영상을 유튜브 심사 뒤 공개로 바꾸고, 설정한 경우 조회수가 낮은 영상을 비공개로 되돌리기 위해</td></tr>
+<tr><td><code>.../auth/yt-analytics-monetary.readonly</code></td><td>(별도 승인한 채널만) 예상 수익 보고서를 읽기 전용으로 보기 위해</td></tr>
 </table>
 
 <h2>2. 다루는 정보</h2>
 <ul>
 <li><b>채널 식별 정보</b> — 채널 ID, 채널명, 프로필·배너 이미지 주소</li>
 <li><b>영상 지표</b> — 이 앱으로 올린 영상의 조회수·좋아요 수·댓글 수</li>
+<li><b>채널 분석 지표</b> — 유튜브 분석이 제공하는 채널의 일별 조회수·시청 시간·구독자 증감</li>
+<li><b>예상 수익</b> — 채널 주인이 따로 승인한 채널의 예상 수익 보고서(읽기 전용)</li>
 <li><b>접근 토큰</b> — 구글이 발급한 리프레시 토큰</li>
 </ul>
 <p>이름·이메일·주소·결제 정보는 다루지 않습니다. 시청자 개인정보에는 접근하지 않습니다.</p>
@@ -86,9 +89,12 @@ to YouTube channels with the channel owner's explicit consent.</p>
 <ul>
 <li><b>Scopes requested:</b> <code>youtube.upload</code> (to upload videos) and
 <code>youtube.readonly</code> (to identify the target channel and read view/like/comment counts
-of videos uploaded by this tool), and youtube (to switch a reviewed private upload to public).</li>
-<li><b>Data handled:</b> channel ID and title, public metrics of uploaded videos, and the OAuth
-refresh token.</li>
+of videos uploaded by this tool), and youtube (to switch a reviewed private upload to public, or back to
+private when the operator enables that option). For channels whose owner separately approves it, the tool
+also requests <code>yt-analytics-monetary.readonly</code> to read estimated revenue reports (read-only).</li>
+<li><b>Data handled:</b> channel ID and title, public metrics of uploaded videos, channel analytics
+(daily views, watch time, subscriber change), estimated revenue for separately approved channels, and the
+OAuth refresh token.</li>
 <li><b>Storage:</b> stored only on the operator's local computer. There is no server. Token files
 are permission-restricted to the owner.</li>
 <li><b>Sharing:</b> data is never sold, shared with third parties, or used for advertising or analytics.</li>
